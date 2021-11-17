@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.port || 3000;
+const port = process.env.PORT || 3000;
  
 const { MerkleTree } = require('merkletreejs');
 const keccak256 = require('keccak256');
@@ -15,6 +15,6 @@ app.get('/proof/:address', (req, res) => {
   res.send(proof);
 });
  
-app.listen(PORT, () => {
-  console.log(`Listening - ${PORT}`);
+app.listen(port, () => {
+  console.log(`Listening - ${port}`);
 });
