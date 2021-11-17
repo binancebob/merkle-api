@@ -1,0 +1,24 @@
+{
+  "name": "merkleapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/binancebob/merkle-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/binancebob/merkle-api/issues"
+  },
+  "homepage": "https://github.com/binancebob/merkle-api#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "keccak256": "^1.0.3",
+    "merkletreejs": "^0.2.24"
+  }
+}
