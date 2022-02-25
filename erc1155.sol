@@ -16,19 +16,19 @@ contract VoyagersGenesisPass is ERC1155Burnable, ReentrancyGuard, Ownable {
 
 	string private baseURI;
 
-	uint256 public constant GEN_PASS_FEE = 0.08 ether;  
-    uint256 public constant PUBLIC_PASS_FEE = 0.1111 ether; 
-	uint256 public constant OG_TIME_LIMIT = 6 hours; 
+	uint256 public constant GEN_PASS_FEE = 0.00008 ether;   // set to 0.08888 ETH on finalize
+    uint256 public constant PUBLIC_PASS_FEE = 0.00011 ether; // set to 0.1111 ETH on finalize
+	uint256 public constant OG_TIME_LIMIT = 1 hours;   // set to 8 hours on finalize
 
-	string public constant NAME = "VoyagersGame Genesis Pass";
-	string public constant SYMBOL = "VGGP";
-	address public VAULT = 0x9AFd3a2AAC444123b33f1fcD5f26F9B63E9EA53d; // set to a trezor wallet on finalize
+	string public constant name = "VoyagersGame Genesis Pass";
+	string public constant symbol = "VGGP";
+	address public VAULT = 0x1f6b72ad351A5D2FD73dD243eDb475a837E43026; // set to a trezor wallet on finalize
 
-	uint16[] public supplyCaps = [0, 2222];
+	uint16[] public supplyCaps = [0, 10];
 
 	bytes32 public ogMerkleRoot;
 	uint256 public startTimestamp;
-
+    bool public paused = false;
 
 	mapping(uint8 => uint256) public supplies;
 
@@ -61,6 +61,11 @@ contract VoyagersGenesisPass is ERC1155Burnable, ReentrancyGuard, Ownable {
 		require(
 			block.timestamp >= startTimestamp,
 			"VGGENPASS: Not started yet"
+		);
+
+        require(
+			paused == false,
+			"VGGENPASS: Minting Paused"
 		);
 
 		uint256 timePeriod = block.timestamp - startTimestamp;  
@@ -125,7 +130,9 @@ contract VoyagersGenesisPass is ERC1155Burnable, ReentrancyGuard, Ownable {
 		return string(abi.encodePacked(baseURI));
 	}
 
-	
+    function pause(bool _paused) external onlyOwner {
+		paused = _paused;
+	}
 
 	function setBaseUri(string memory _baseURI) external onlyOwner {
 		baseURI = _baseURI;
