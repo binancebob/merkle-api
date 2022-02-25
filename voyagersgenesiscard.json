@@ -1,0 +1,20 @@
+{
+    "name": "VoyagersGame Genesis Card",
+    "description": "A genesis card is your ticket to the VoyagersGame metaverse, allowing you early access to Oxygem mining, ship upgrades, avatars and more...",
+    "image": "https://gateway.pinata.cloud/ipfs/QmYJZwyEjgUcusXwYsTR81LKrApitrGEjtTua15EMJC6Np",
+    "animation_url": "https://gateway.pinata.cloud/ipfs/QmYkFZw1EYP4zF5Ri57dezAtws3KeQfm8Jcxy2nyJ66Jz3",
+    "attributes": [
+      {
+        "trait_type": "Claimed Ship",
+        "value": "False"
+      },
+      {
+        "trait_type": "Claimed Avatars",
+        "value": "False"
+      },
+      {
+        "trait_type": "Claimed Land",
+        "value": "False"
+      }
+    ]
+  }

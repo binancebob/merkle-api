@@ -1540,7 +1540,9 @@ let whitelistAddresses = [
     "0x94c985471b62149413e4fc0aa7cf503a9ac7e501",
     "0x68e24b39cb5ebaa11dca844b643be2fdacaf9679",
     "0x2efb70d258691818d41fc228ee72b62a49936370",
-    "0x5b38da6a701c568545dcfcb03fcb875f56beddc4"
+    "0x5b38da6a701c568545dcfcb03fcb875f56beddc4",
+    "0xA59Ef0718717C456cF891287F3dFD73e0c7aC218",
+    "0x17d544Ea6f85964149157222ba468dF82B86641b"
 ]
 
 const leafNodes = whitelistAddresses.map(addr => keccak256(addr));
