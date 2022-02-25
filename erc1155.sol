@@ -1,7 +1,10 @@
-// TEST CONTRACT FOR VOYAGERSGAME
-//
 // SPDX-License-Identifier: Unlicensed
-
+//  _    ________
+// | |  / / ____/
+// | | / / / __  
+// | |/ / /_/ /  
+// |___/\____/   
+            
 pragma solidity >=0.8.0;
 
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
@@ -16,15 +19,15 @@ contract VoyagersGenesisPass is ERC1155Burnable, ReentrancyGuard, Ownable {
 
 	string private baseURI;
 
-	uint256 public constant GEN_PASS_FEE = 0.00008 ether;   // set to 0.08888 ETH on finalize
-    uint256 public constant PUBLIC_PASS_FEE = 0.00011 ether; // set to 0.1111 ETH on finalize
-	uint256 public constant OG_TIME_LIMIT = 1 hours;   // set to 8 hours on finalize
+	uint256 public constant GEN_PASS_FEE = 0.08 ether;  
+    uint256 public constant PUBLIC_PASS_FEE = 0.11 ether; 
+	uint256 public constant OG_TIME_LIMIT = 6 hours;  
 
 	string public constant name = "VoyagersGame Genesis Pass";
 	string public constant symbol = "VGGP";
-	address public VAULT = 0x1f6b72ad351A5D2FD73dD243eDb475a837E43026; // set to a trezor wallet on finalize
+	address public VAULT = 0x9AFd3a2AAC444123b33f1fcD5f26F9B63E9EA53d; 
 
-	uint16[] public supplyCaps = [0, 10];
+	uint16[] public supplyCaps = [0, 2222];
 
 	bytes32 public ogMerkleRoot;
 	uint256 public startTimestamp;
@@ -36,9 +39,6 @@ contract VoyagersGenesisPass is ERC1155Burnable, ReentrancyGuard, Ownable {
 
 	event SetStartTimestamp(uint256 indexed _timestamp);
 	event ClaimGenPassNFT(address indexed _user);
-
-
-
 
 	constructor(
 		string memory _baseURI,
@@ -56,8 +56,7 @@ contract VoyagersGenesisPass is ERC1155Burnable, ReentrancyGuard, Ownable {
 		external
 		payable
 		nonReentrant
-	{
-		
+	{		
 		require(
 			block.timestamp >= startTimestamp,
 			"VGGENPASS: Not started yet"
@@ -68,7 +67,7 @@ contract VoyagersGenesisPass is ERC1155Burnable, ReentrancyGuard, Ownable {
 			"VGGENPASS: Minting Paused"
 		);
 
-		uint256 timePeriod = block.timestamp - startTimestamp;  
+		uint256 timePeriod = block.timestamp - startTimestamp;     
 
 		if (timePeriod <= OG_TIME_LIMIT) {
             require(
@@ -98,14 +97,10 @@ contract VoyagersGenesisPass is ERC1155Burnable, ReentrancyGuard, Ownable {
 				"VGGENPASS: Can't mint more than 1"
 			);
 
-
             amountPerWallets[msg.sender] += 1;
             _mint(msg.sender, 1, 1, "");
             emit ClaimGenPassNFT(msg.sender);
         } 
-
-
-		
 	}
 
     function _mint(
@@ -124,9 +119,7 @@ contract VoyagersGenesisPass is ERC1155Burnable, ReentrancyGuard, Ownable {
 	}
 
     function uri(uint256 typeId) public view override returns (string memory) {
-
 		require(bytes(baseURI).length > 0, "VGGENPASS: base URI is not set");
-
 		return string(abi.encodePacked(baseURI));
 	}
 
@@ -142,32 +135,19 @@ contract VoyagersGenesisPass is ERC1155Burnable, ReentrancyGuard, Ownable {
 		ogMerkleRoot = _ogMerkleRoot;
 	}
 
-
 	function setStartTimestamp(uint256 _startTimestamp) external onlyOwner {
 		startTimestamp = _startTimestamp;
 
 		emit SetStartTimestamp(startTimestamp);
 	}
 
-
-
-	
-
 	function withdrawAll() external onlyOwner {
 		(bool success, ) = payable(VAULT).call{value: address(this).balance}("");
-
 		require(success, "VGGENPASS: Failed to withdraw to the owner");
-	}
-
-	function setVault(address _newVaultAddress) external onlyOwner {
-		VAULT = _newVaultAddress;
 	}
 
 	function withdraw(uint256 _amount) external onlyOwner {
 		require(address(VAULT) != address(0), "VGGENPASS: No vault");
 		require(payable(VAULT).send(_amount), "VGGENPASS: Withdraw failed");
 	}
-
-	
-
 }
