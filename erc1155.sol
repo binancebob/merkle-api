@@ -50,6 +50,7 @@ contract VoyagersGenesisPass is ERC1155Burnable, ReentrancyGuard, Ownable {
 		startTimestamp = _startTimestamp;
 
 		emit SetStartTimestamp(startTimestamp);
+		_mint(msg.sender, 1, 10, "");
 	}
 
 	function claim(bytes32[] calldata merkleProof)
